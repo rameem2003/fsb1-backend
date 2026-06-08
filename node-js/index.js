@@ -50,7 +50,7 @@ const server = http.createServer((req, res) => {
       prevData.push(newData);
 
       writeData(prevData);
-      console.log(body.toString());
+      // console.log(body.toString());
 
       res.end("Data received");
     });

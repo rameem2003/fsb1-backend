@@ -1,0 +1,21 @@
+info:
+  name: Add New Data
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:3000/add
+  body:
+    type: json
+    data: |-
+      {
+        "name": "Test"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
