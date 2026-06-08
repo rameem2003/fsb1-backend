@@ -1,0 +1,14 @@
+info:
+  name: Delete
+  type: http
+
+http:
+  method: DELETE
+  url: http://localhost:3000/delete/4735ac22-a949-4be1-985f-04d58bff33a1
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
