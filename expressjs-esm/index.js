@@ -1,7 +1,9 @@
 import express from "express";
-import readData from "./utils/fileOperation.js";
+import { readData, writeData } from "./utils/fileOperation.js";
+import crypto from "crypto";
 
 const app = express();
+app.use(express.json());
 
 app.get("/", (req, res) => {
   res.send("Hello World");
@@ -34,11 +36,78 @@ app.get("/", (req, res) => {
 //   res.send("ok");
 // });
 
+/**
+ * GET /api/data
+ */
 app.get("/api/data", (req, res) => {
-  // console.log("");
-
   let data = readData();
-  res.send(data);
+  res.status(200).send(data);
+});
+
+/**
+ * POST /api/data
+ */
+app.post("/api/data", (req, res) => {
+  let data = req.body;
+  let prevData = readData();
+
+  let newData = {
+    id: crypto.randomUUID(),
+    ...data,
+  };
+
+  prevData.push(newData);
+
+  writeData(prevData);
+
+  // console.log(newData);
+  res.status(201).send({
+    success: true,
+    message: "Data added successfully",
+    data: newData,
+  });
+});
+
+/**
+ * DELETE /api/data/:id
+ */
+app.delete("/api/data/:id", (req, res) => {
+  let id = req.params.id;
+  let prevData = readData();
+
+  let newData = prevData.filter((item) => item.id !== id);
+
+  writeData(newData);
+
+  res.status(200).send({
+    success: true,
+    message: "Data deleted successfully",
+  });
+});
+
+app.put("/api/data/:id", (req, res) => {
+  let id = req.params.id;
+  let data = req.body;
+
+  let prevData = readData();
+
+  let newData = prevData.map((item) => {
+    if (item.id === id) {
+      return {
+        ...item,
+        ...data,
+      };
+    } else {
+      return item;
+    }
+  });
+
+  writeData(newData);
+
+  res.status(200).send({
+    success: true,
+    message: "Data updated successfully",
+  });
 });
 
 app.listen(3000, () => {

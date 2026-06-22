@@ -1,18 +1,15 @@
 import fs from "fs";
 import path from "path";
+
+const DATA_SOURCE = path.join(import.meta.dirname, "../", "data.json");
 const readData = () => {
-  let data = fs.readFileSync(
-    path.join(import.meta.dirname, "../", "data.json"),
-    "utf-8",
-  );
+  let data = fs.readFileSync(DATA_SOURCE, "utf-8");
 
   return JSON.parse(data);
 };
 
-export default readData;
+const writeData = (data) => {
+  fs.writeFileSync(DATA_SOURCE, JSON.stringify(data));
+};
 
-//  file // folder
-
-// expressjs-esm/utils/
-
-// expressjs-esm
+export { readData, writeData };
