@@ -1,13 +1,13 @@
 import express from "express";
-import crypto from "crypto";
 import auth from "./router/auth.js";
 
 const app = express();
 app.use(express.json());
 app.use(auth);
 
+//
 app.get("/", (req, res) => {
-  throw new Error("This is a test error");
+  // throw new Error("This is a test error");
   res.send("Hello World");
 });
 
